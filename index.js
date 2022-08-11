@@ -23,13 +23,13 @@ MongoClient.connect('mongodb+srv://appredator:SPDspd750@cluster0.ajunnq7.mongodb
     // READ HANDLER
     
     app.get('/', (req, res) => {
-      return res.sendFile(__dirname + '/index.html')
+      // return res.sendFile(__dirname + '/index.html')
       db.collection('quotes').find().toArray()
         .then(results => {
           return res.render('index.ejs', { quotes: results })
           return;
         })
-        .catch()
+        .catch(error => console.error(error))
     })
 
 
