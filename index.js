@@ -57,7 +57,28 @@ MongoClient.connect('mongodb+srv://appredator:SPDspd750@cluster0.ajunnq7.mongodb
 .catch(console.error)
 
 
+function randomPick()
+{
+let holder = Math.random();
 
+console.log("Random value is " + holder)
+
+if(holder < .33)
+{
+  console.log("Coalmont OHV")
+}
+else if (holder > .33 && holder < .66)
+{
+  console.log("Sherwood")
+}
+else if ( holder > .66 && holder < .999)
+{
+  console.log("Holly Tree, AL")
+}
+
+}
+
+randomPick();
 
 
 
