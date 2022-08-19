@@ -21,10 +21,29 @@ MongoClient.connect('mongodb+srv://appredator:SPDspd750@cluster0.ajunnq7.mongodb
     // Tell app we are using EJS
     app.set('view engine', 'ejs')
 
+    // DELETE HANDLER 
+
+
   // UPDATE HANDLER
     app.put('/quotes', (req, res) => {
-      console.log(req.body)
-      console.log("PUT /  Update Request is good")
+      quotesCollection.findOneAndUpdate(
+        { name: 'Yoda' },
+        {
+          $set: {
+            name: req.body.name,
+            quote: req.body.quote
+          }
+        },
+        {
+          upsert: true
+        }
+      )
+     
+      .then(response => {
+        console.log(response)
+      })
+     .catch(error => console.error(error))
+   
     })
 
     // READ HANDLER
@@ -39,6 +58,17 @@ MongoClient.connect('mongodb+srv://appredator:SPDspd750@cluster0.ajunnq7.mongodb
         .catch(error => console.error(error))
     })
 
+    //DELETE HANDLER
+    app.delete('/quotes', (req, res) => {
+      quotesCollection.deleteOne({ name: req.body.name })
+        .then(result => {
+          if (result.deletedCount === 0) {
+            return res.json('No quote to delete')
+          }
+          res.json(`Deleted Darth Vader's quote`)
+        })
+        .catch(error => console.error(error))
+    })
 
     //CREATE HANDLER
 
@@ -53,6 +83,10 @@ MongoClient.connect('mongodb+srv://appredator:SPDspd750@cluster0.ajunnq7.mongodb
           .catch(error => console.error(error))
       })
 
+
+
+    })
+
     app.listen(3000, function() {
 
    
@@ -60,8 +94,8 @@ MongoClient.connect('mongodb+srv://appredator:SPDspd750@cluster0.ajunnq7.mongodb
     })
 
 
-})
-.catch(console.error)
+// })
+// .catch(console.error)
 
 
 
@@ -91,25 +125,25 @@ MongoClient.connect('mongodb+srv://appredator:SPDspd750@cluster0.ajunnq7.mongodb
 
 
 
-function randomPick()
-{
-let holder = Math.random();
+// function randomPick()
+// {
+// let holder = Math.random();
 
-console.log("Random value is " + holder)
+// console.log("Random value is " + holder)
 
-if(holder < .33)
-{
-  console.log("Coalmont OHV")
-}
-else if (holder > .33 && holder < .66)
-{
-  console.log("Sherwood")
-}
-else if ( holder > .66 && holder < .999)
-{
-  console.log("Holly Tree, AL")
-}
+// if(holder < .33)
+// {
+//   console.log("Coalmont OHV")
+// }
+// else if (holder > .33 && holder < .66)
+// {
+//   console.log("Sherwood")
+// }
+// else if ( holder > .66 && holder < .999)
+// {
+//   console.log("Holly Tree, AL")
+// }
 
-}
+// }
 
-randomPick();
+// randomPick()
